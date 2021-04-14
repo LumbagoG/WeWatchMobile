@@ -1,0 +1,215 @@
+/* Ionic Variables and Theming. For more info, please see:
+http://ionicframework.com/docs/theming/ */
+
+@font-face {
+  font-family: 'Thillends';
+  src: url(../assets/fonts/Thillends.otf);
+}
+
+/** Ionic CSS Variables **/
+:root {
+  /** primary **/
+  --ion-background-body-color: #fff;
+  --ion-border-element:  rgb(153, 153, 153);
+  --ion-background-elem-color: rgb(226, 226, 226);
+  --ion-color-primary: #007BFF;
+  --ion-color-logo: #202126;
+}
+
+*{
+  transition: .3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  /*
+   * Dark Colors
+   * -------------------------------------------
+   */
+
+  body {
+    --ion-background-body-color:#202126;
+    --ion-color-logo:#fff;
+    --ion-background-elem-color:#26272C;
+    --ion-border-element:rgb(150, 150, 150);
+  }
+
+  /*
+   * iOS Dark Theme
+   * -------------------------------------------
+   */
+
+  .ios body {
+    --ion-background-body-color: #202126;
+  }
+
+
+  /*
+   * Material Design Dark Theme
+   * -------------------------------------------
+   */
+
+  .md body {
+    --ion-background-body-color: #202126;
+  }
+}
+
+body{
+  background-color: var(--ion-background-body-color);
+}
+
+.auth-title-ww{
+  font-size: 4.4em;
+  font-family: 'Thillends';
+
+  color: var(--ion-color-logo);
+
+  margin-top: .3em;
+}
+
+#toast-container{
+  background-color: var(--ion-color-primary);
+  color: white;
+  padding: 0.8em;
+  text-align: center;
+}
+
+.ripple-parent {
+  height: 2.2em;
+  width: 2.4em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: .4em;
+  background-color: var(--ion-background-elem-color);
+  border-radius: .5em;
+}
+
+.auth-btn-social{
+  color: #A7ACB2;
+}
+
+.auth-container{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.ion-activatable{
+  margin: 1.3em 0em;
+}
+
+.ion-activatable[href^="/main"], 
+.ion-activatable[href^="/reg"],
+.ion-activatable[href^="/"] {
+  margin: 0em 0em;
+}
+
+.auth-input{
+  width: 100%;
+  background-color:  var(--ion-background-elem-color);
+  color: #A7ACB2;
+  border-radius: .5em;
+  padding-left: 1.3em !important;
+}
+
+.auth-label{
+  width: 4.5em !important;
+  text-align: center;
+  padding: .3em;
+  margin-left: 1em !important;
+  border-radius: .7em;;
+  z-index: 100;
+  color: #A7ACB2 !important;
+  background-color: var(--ion-background-body-color);
+}
+
+.repeat{
+  width: 10em !important;
+}
+
+.auth-items-wrapper-login{
+  width: 90%;
+}
+
+.auth-items-wrapper-pass{
+  width: 90%;
+  margin-top: .5em !important;
+}
+
+.help{
+  width: 80%;
+  margin: 2% auto;
+  font-size: .8em;
+  color:#A7ACB2;
+  justify-content: flex-start;
+}
+
+.accept{
+  width: 90%;
+  margin: 0 auto;
+  font-size: .8em;
+  color:#A7ACB2;
+  justify-content: flex-start;
+}
+
+.icons{
+  width: 80%;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--ion-border-element);
+}
+
+.btn-group{
+  width: 100%;
+}
+
+.btn-auth, .btn-reg{
+  width: 100%;
+  margin: 0em 0em;
+  background-color: var(--ion-color-primary);
+  color: #fff;
+  font-size: .9em;
+  padding: 1.2em 0;
+}
+
+.btn-reg{
+  background-color: var(--ion-background-elem-color);
+}
+
+.wrapper-btn-group{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.footer-auth{
+  text-align: center;
+  font-size: .8em;
+}
+
+.item-hover-cursor{
+  cursor: pointer;
+}
+
+.icons .item-hover-cursor:hover{
+  background-color: var(--ion-color-primary);
+}
+
+.icons .item-hover-cursor:hover .auth-btn-social{
+  color: #fff !important;
+}
+
+.progress-pass{
+  margin: 1em .2em 0em .2em;
+}
+
+.text-accept{
+  color: #A7ACB2;
+}
+
+.exit{
+  display: flex;
+  justify-content: center;
+}

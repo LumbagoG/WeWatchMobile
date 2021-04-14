@@ -1,0 +1,148 @@
+@import url(c:\Users\Admin\Desktop\WeWatchMobile-master\myApp\src\theme\variables.css);
+* {
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+}
+
+body {
+  background-color: var(--ion-background-body-color);
+}
+
+.auth-title-ww {
+  font-size: 4.4em;
+  font-family: 'Thillends';
+  color: var(--ion-color-logo);
+  margin-top: .3em;
+}
+
+.ripple-parent {
+  height: 2.2em;
+  width: 2.4em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  overflow: hidden;
+  padding: .4em;
+  background-color: #26272C;
+  border-radius: .5em;
+}
+
+.auth-btn-social {
+  color: #A7ACB2;
+}
+
+.auth-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.ion-activatable {
+  margin: 1.4em 0em;
+}
+
+.auth-input {
+  width: 100%;
+  background-color: #26272C;
+  color: #A7ACB2;
+  border-radius: .5em;
+  padding-left: 1.3em !important;
+}
+
+.auth-label {
+  width: 4.5em !important;
+  text-align: center;
+  padding: .3em;
+  margin-left: 1em !important;
+  border-radius: .7em;
+  z-index: 100;
+  color: #A7ACB2 !important;
+  background-color: var(--ion-background-body-color);
+}
+
+.auth-items-wrapper-login {
+  width: 90%;
+}
+
+.auth-items-wrapper-pass {
+  width: 90%;
+  margin-top: .5em !important;
+}
+
+.help {
+  width: 80%;
+  margin: 2% auto;
+  font-size: .8em;
+  color: #A7ACB2;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.icons {
+  width: 80%;
+  margin: 0 auto;
+  border-bottom: 1px solid #2c2c2c;
+}
+
+.btn-group {
+  width: 100%;
+}
+
+.btn-auth,
+.btn-reg {
+  width: 100%;
+  margin: 0em 0em;
+  background-color: var(--ion-color-primary);
+  color: #fff;
+  font-size: .9em;
+  padding: 1.2em 0;
+}
+
+.btn-reg {
+  background-color: #26272C;
+}
+
+.wrapper-btn-group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 90%;
+}
+
+.footer-auth {
+  text-align: center;
+  font-size: .8em;
+}
+
+.item-hover-cursor {
+  cursor: pointer;
+}
+
+.icons .item-hover-cursor:hover {
+  background-color: var(--ion-color-primary);
+}
+
+.icons .item-hover-cursor:hover .auth-btn-social {
+  color: #fff;
+}
+/*# sourceMappingURL=auth.css.map */

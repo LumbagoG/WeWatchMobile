@@ -1,0 +1,5 @@
+@import url("../../theme/variables.css");
+.tab-bar, .tab-button {
+  background-color: var(--ion-background-body-color);
+}
+/*# sourceMappingURL=main.css.map */

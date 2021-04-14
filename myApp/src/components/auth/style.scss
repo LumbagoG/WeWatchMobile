@@ -1,0 +1,9 @@
+.header{
+    width: 100%;
+
+    &:hover{
+        .wrapper{
+            width: 10%;
+        }
+    }
+}
