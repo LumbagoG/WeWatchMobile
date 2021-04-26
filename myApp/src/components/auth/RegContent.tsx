@@ -57,7 +57,7 @@ const RegContent: React.FC = () => {
   // fetch to backend
   const registerHandler = async () => {
     try {
-      const data = await request('https://wewatchmobile.herokuapp.com/api/auth/register', 'POST', { ...form });
+      const data = await request('https://wewatch-mobile.herokuapp.com/api/auth/register', 'POST', { ...form });
       message(data.message);
     } catch (e) { }
   };

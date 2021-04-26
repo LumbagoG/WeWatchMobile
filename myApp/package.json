@@ -34,15 +34,14 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.3",
     "serialize-javascript": "^5.0.1",
+    "socket.io-client": "^4.0.1",
     "typescript": "3.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
-
-    "client": "ionic serve --prefix client",
+    "client": "ionic serve --prefix client --PORT=5000",
     "build": "react-scripts build",
-    "production" : "serve -s build",
-    
+    "production": "serve -s build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

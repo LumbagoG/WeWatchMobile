@@ -32,9 +32,10 @@ import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 
 /* Local imports */
-import Main from '../main/Main';
+import Main from '../home/Main';
 import AuthContent from '../../components/auth/AuthContent';
 import RegContent from '../../components/auth/RegContent';
+import Chat from '../chat/Chat';
 
 export const Auth = (isAunteficated: boolean) => {
   if (isAunteficated) {
@@ -45,6 +46,8 @@ export const Auth = (isAunteficated: boolean) => {
         <IonReactRouter>
           
             <Route path='/main' component={Main} />
+            <Route path='/main/chat' component={Chat} />
+            
             <Route render={() => <Redirect to='/main/home'/>}/>
 
         </IonReactRouter>
