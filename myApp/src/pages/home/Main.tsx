@@ -38,6 +38,8 @@ const Main: React.FC = () => {
   return (
     <IonApp>
 
+      
+
       <IonTabs className='tab'>
         {/* Routs */}
         <IonRouterOutlet>

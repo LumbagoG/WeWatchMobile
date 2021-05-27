@@ -1,9 +1,21 @@
 import {useCallback} from 'react';
 
+import {useIonToast} from '@ionic/react';
+
 export const useMessage = () => {
+  const [present] = useIonToast();
+
   return useCallback(text => {
-    if (window.M && text) {
-      window.M.toast({ html: text, inDuration: 500, outDuration: 500, displayLength: 1400 });
-    }
+
+    if (text) 
+      present({
+        color: 'dark',
+        position: 'top',
+        message: text,
+        onDidDismiss: () => console.log(`Предупреждение - ${text}`),
+        onWillDismiss: () => console.log(`Предупреждение закрыто - ${text}`),
+        duration: 2000
+      })
+
   }, []);
 };

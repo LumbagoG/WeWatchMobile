@@ -29,57 +29,87 @@ import {
   IonItem, IonText, IonFooter, IonToolbar,
   IonProgressBar, IonCheckbox, IonButton
 } from '@ionic/react';
+
 import { useMessage } from '../../hooks/message.hook';
 import { useHttp } from '../../hooks/http.hook';
 import 'materialize-css';
 
 const RegContent: React.FC = () => {
+  //Hooks
   const message = useMessage();
-
   const { request, error, clearError } = useHttp();
   const [form, setForm] = useState({
-    login: '', email: '', password: ''
+    login: '', email: '', password: '', repeatPassword: ''
   });
+  const [progressBar, setProgressBar] = useState({
+    lenght: 0.1, color: 'danger'
+  })
+  const [agreement, setAgreement] = useState({
+    accepted: false
+  })
 
-  // Debug
-  useEffect(() => {
-    message(error);
+  // Loggin errors
+  const regErrors = useEffect(() => {
+    message(error)
     clearError();
   }, [error, message, clearError])
 
-  let loading = false;
+  // State progress bar
+  const progressBarHandler = useEffect(() => {
+
+    if (form.password.length <= 5)
+      setProgressBar({ lenght: 0.1, color: 'danger' })
+
+    else if (form.password.length <= 10)
+      setProgressBar({ lenght: 0.5, color: 'warning' })
+
+    else if (form.password.length >= 15)
+      setProgressBar({ lenght: 1, color: 'success' })
+
+  }, [form.password.length, progressBar.color, progressBar.lenght])
 
   // state change inputs
   const changeHandler = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
+  // State agreement input
+  const changeAgreementhandler = (event) => {
+    setAgreement({ accepted: event.target.checked })
+  }
+
   // fetch to backend
   const registerHandler = async () => {
     try {
-      const data = await request('https://wewatch-mobile.herokuapp.com/api/auth/register', 'POST', { ...form });
+
+      const data = await request(
+        'https://wewatch-mobile.herokuapp.com/api/auth/register',
+        'POST',
+        { login: form.login, email: form.email, password: form.password }
+      );
+
       message(data.message);
-    } catch (e) { }
+
+    } catch (e) { console.log('Возникла ошибка - ' + e) }
   };
 
   return (
     <IonApp>
-      <IonGrid>
+      <IonGrid className='ion-justify-content-center'>
 
         {/* Title */}
-        <IonRow class='ion-justify-content-center'>
+        <IonRow>
           <IonCol>
-            <IonTitle class='auth-title-ww ion-text-center'>
+            <IonTitle className='auth-title-ww ion-text-center'>
               WeWatch
-              </IonTitle>
+            </IonTitle>
           </IonCol>
         </IonRow>
-        {/* /Title */}
-
 
         {/* Inputs */}
-        <IonRow class='auth-container'>
-          <IonItem class='auth-items-wrapper-login' color='transparent' lines='none'>
+        <IonRow className='auth-container ion-justify-content-center'>
+
+          <IonItem className='auth-items-wrapper-login' color='transparent' lines='none'>
             <IonLabel className="auth-label" position="stacked">Логин</IonLabel>
             <IonInput
               id="login"
@@ -90,7 +120,8 @@ const RegContent: React.FC = () => {
               onIonChange={changeHandler}>
             </IonInput>
           </IonItem>
-          <IonItem class='auth-items-wrapper-login' color='transparent' lines='none'>
+
+          <IonItem className='auth-items-wrapper-login' color='transparent' lines='none'>
             <IonLabel className="auth-label" position="stacked">Почта</IonLabel>
             <IonInput
               id="email"
@@ -101,7 +132,8 @@ const RegContent: React.FC = () => {
               onIonChange={changeHandler}>
             </IonInput>
           </IonItem>
-          <IonItem class='auth-items-wrapper-pass' color='transparent' lines='none'>
+
+          <IonItem className='auth-items-wrapper-pass' color='transparent' lines='none'>
             <IonLabel className="auth-label" position="stacked">Пароль</IonLabel>
             <IonInput
               id="password"
@@ -113,59 +145,72 @@ const RegContent: React.FC = () => {
             </IonInput>
           </IonItem>
 
-          <IonRow class='auth-container help'>
-            <IonProgressBar class="progress-pass" color='success' value={0.7}></IonProgressBar><br />
+          <IonRow className='auth-container help'>
+
+            <IonProgressBar
+              className="progress-pass"
+              color={progressBar.color}
+              value={progressBar.lenght} />
+
           </IonRow>
 
-          <IonItem class='auth-items-wrapper-pass' color='transparent' lines='none'>
-            <IonLabel className="auth-label repeat" position="stacked">Повторите пароль</IonLabel>
-            <IonInput className="auth-input" type='password'></IonInput>
+          <IonItem className='auth-items-wrapper-pass' color='transparent' lines='none'>
+            <IonLabel className="auth-label repeat" position="stacked">Повтор пароля</IonLabel>
+            <IonInput
+              id="repeatPassword"
+              name="repeatPassword"
+              className="auth-input"
+              type='password'
+              value={form.repeatPassword}
+              onIonChange={changeHandler}>
+            </IonInput>
           </IonItem>
         </IonRow>
-        {/* /Inputs */}
 
         {/* ForgotPassword */}
-        <IonRow class='auth-container accept'>
-          <IonItem class='reg-accept' color='transparent' lines='none'>
-            <IonText class='text-accept'>Я принимаю условия пользовательского соглашения</IonText>
-            <IonCheckbox slot="start" value='Pepperoni' checked={false} />
-          </IonItem>
-        </IonRow>
-        {/* /ForgotPassword */}
+        <IonRow className='auth-container accept'>
 
+          <IonItem className='reg-accept' color='transparent' lines='none'>
+            <IonText className='text-accept'>Я принимаю условия пользовательского соглашения</IonText>
+            <IonCheckbox slot="start" value='Pepperoni' onIonChange={changeAgreementhandler} />
+          </IonItem>
+
+        </IonRow>
 
         {/* AuthBtn */}
-        <IonRow class='auth-container btn-group'>
-          <IonItem class='wrapper-btn-group' color='transparent' lines='none'>
-            <div className="ion-activatable ripple-parent btn-auth item-hover-cursor">
-              <IonButton
-                fill="clear"
-                expand="block"
-                style={{color: 'white', width: '100%'}}
-                onClick={registerHandler}
-                disabled={loading}
-              >Зарегистрироваться</IonButton>
-              <IonRippleEffect></IonRippleEffect>
-            </div>
+        <IonRow className='auth-container btn-group ion-justify-content-center ion-align-items-center'>
+          <IonItem className='wrapper-btn-group' color='transparent' lines='none'>
+
+            <IonButton
+              fill="solid"
+              expand="block"
+              style={{ color: 'white', width: '100%', height: '70%', margin: 0 }}
+              onClick={registerHandler}
+              disabled={
+                (progressBar.color !== 'danger' && agreement.accepted
+                  && (form.repeatPassword === form.password)) ? false : true
+              }
+            >Зарегистрироваться</IonButton>
+
+            <IonRippleEffect></IonRippleEffect>
+
           </IonItem>
-          <IonItem href='/' class='wrapper-btn-group exit' color='transparent' lines='none'>
-            <IonText class='text-accept'><p className='item-hover-cursor text-accept'>Назад</p></IonText>
+
+          <IonItem href='/' className='wrapper-btn-group exit' color='transparent' lines='none'>
+            <IonText className='text-accept'><p className='item-hover-cursor text-accept'>Назад</p></IonText>
           </IonItem>
 
         </IonRow>
       </IonGrid>
-      {/* /AuthBtn */}
-
 
       {/* Footer */}
       <IonFooter className="ion-no-border footer-auth">
         <IonToolbar className='footer-auth-group-text' color='transparent'>
 
-          <p>Имеются проблемы? <IonText className='item-hover-cursor' color='primary'>Получить помощь</IonText></p>
+          <IonText>Имеются проблемы? <IonText className='item-hover-cursor' color='primary'>Получить помощь</IonText></IonText>
 
         </IonToolbar>
       </IonFooter>
-      {/* /Footer */}
 
     </IonApp>
   );

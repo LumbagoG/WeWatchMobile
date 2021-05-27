@@ -21,30 +21,28 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import '../../theme/variables.css';
+import './style.css';
 
 /* Ionic imports */
 import {
   IonApp, IonGrid, IonTitle, IonRow, IonCol,
   IonRippleEffect, IonIcon, IonLabel, IonInput,
-  IonItem, IonText, IonFooter, IonToolbar, IonButton
+  IonItem, IonText, IonFooter, IonToolbar, IonButton, IonContent 
 } from '@ionic/react';
 
 /* Any imports */
 import { AuthContext } from '../../context/AuthContext';
 import { useHttp } from '../../hooks/http.hook';
 import { useMessage } from '../../hooks/message.hook';
-import 'materialize-css';
 
 function listSocialBtn() {
   const btnIcons = [logoGoogle, logoFacebook, logoTwitter];
 
   return btnIcons.map((elem, index) =>
-    <IonItem color='transparent' lines='none' key={index}>
-      <div className="ion-activatable ripple-parent item-hover-cursor">
+    <IonRow className='ion-activatable ripple-parent item-hover-cursor wrapper-btns' color='transparent' key={index}>
         <IonIcon class='auth-btn-social' icon={elem}></IonIcon>
         <IonRippleEffect></IonRippleEffect>
-      </div>
-    </IonItem>
+    </IonRow>
   )
 }
 
@@ -57,15 +55,17 @@ const AuthContent: React.FC = () => {
     login: '', password: ''
   });
 
-  // Debug
+  // Loggin errors
   useEffect(() => {
-    message(error);
+
+    message(error)
     clearError();
+
   }, [error, message, clearError])
 
   // state change inputs
   const changeHandler = (event) => {
-    setForm({ ...form, [event.target.name]: event.target.value });
+    setForm({ ...form, [event.target.name]: event.target.value })
   };
 
   // fetch to backend
@@ -73,33 +73,32 @@ const AuthContent: React.FC = () => {
     try {
       const data = await request('https://wewatch-mobile.herokuapp.com/api/auth/login', 'POST', { ...form });
       auth.login(data.token, data.userId);
-    } catch (e) { }
+      
+    } catch (e) { console.log('Возникла ошибка - ' + e) }
   };
 
   return (
     <IonApp>
-      <IonGrid>
-
+      <IonGrid className='ion-justify-content-center'>
         {/* Title */}
-        <IonRow class='ion-justify-content-center'>
+        <IonRow>
           <IonCol>
-            <IonTitle class='auth-title-ww ion-text-center'>
+            <IonTitle className='auth-title-ww ion-text-center'>
               WeWatch
-              </IonTitle>
+            </IonTitle>
           </IonCol>
         </IonRow>
-        {/* /Title */}
-
 
         {/* SocialsBtn */}
-        <IonRow class='auth-container icons'>
-          {listSocialBtn()}
+        <IonRow className='auth-container icons ion-justify-content-center ion-align-items-center'>
+          {
+            listSocialBtn()
+          }
         </IonRow>
-        {/* /SocialsBtn */}
 
         {/* Inputs */}
-        <IonRow class='auth-container'>
-          <IonItem class='auth-items-wrapper-login' color='transparent' lines='none'>
+        <IonRow className='auth-container ion-justify-content-center'>
+          <IonItem className='auth-items-wrapper-login' color='transparent' lines='none'>
             <IonLabel className="auth-label" position="stacked">Логин</IonLabel>
             <IonInput
               id="login"
@@ -112,7 +111,7 @@ const AuthContent: React.FC = () => {
             </IonInput>
           </IonItem>
 
-          <IonItem class='auth-items-wrapper-pass' color='transparent' lines='none'>
+          <IonItem className='auth-items-wrapper-pass' color='transparent' lines='none'>
             <IonLabel className="auth-label" position="stacked">Пароль</IonLabel>
             <IonInput 
               id="password"
@@ -125,53 +124,47 @@ const AuthContent: React.FC = () => {
             </IonInput>
           </IonItem>
         </IonRow>
-        {/* /Inputs */}
-
 
         {/* ForgotPassword */}
-        <IonRow class='auth-container help'>
-          <IonText>
-            <p className='item-hover-cursor'>Забыли пароль?</p>
-          </IonText>
+        <IonRow className='auth-container help'>
+            <IonText className='item-hover-cursor'>Забыли пароль?</IonText>
         </IonRow>
-        {/* /ForgotPassword */}
-
 
         {/* AuthBtn */}
-        <IonRow class='auth-container btn-group'>
-          <IonItem class='wrapper-btn-group' color='transparent' lines='none'>
-            <div className="ion-activatable ripple-parent btn-auth item-hover-cursor">
-            <IonButton
-                fill="clear"
-                expand="block"
-                style={{color: 'white', width: '100%'}}
-                onClick={loginHandler}
-                disabled={loading}
-              >Войти</IonButton>
+        <IonRow className='auth-container btn-group ion-justify-content-center ion-align-items-center'>
+          <IonItem className='wrapper-btn-group' color='transparent' lines='none'>
+            
+              <IonButton
+                  fill="solid"
+                  expand="block"
+                  style={{color: 'white', width: '100%', height: '70%', margin: 0}}
+                  onClick={loginHandler}
+                  disabled={loading}
+                >Войти</IonButton>
 
               <IonRippleEffect></IonRippleEffect>
-            </div>
-          </IonItem>
-          <IonItem href='/reg' class='wrapper-btn-group' color='transparent' lines='none'>
-            <div className="ion-activatable ripple-parent btn-reg item-hover-cursor">
-              <IonText>Регистрация</IonText>
+
+            </IonItem>
+
+          <IonItem href='/reg' className='wrapper-btn-group' color='transparent' lines='none'>
+            <IonItem className="ion-activatable ripple-parent btn-reg item-hover-cursor">
+
+              <IonText style={{ width: '100%' }}>Регистрация</IonText>
               <IonRippleEffect></IonRippleEffect>
-            </div>
+
+            </IonItem>
           </IonItem>
         </IonRow>
       </IonGrid>
-      {/* /AuthBtn */}
-
 
       {/* Footer */}
       <IonFooter className="ion-no-border footer-auth">
         <IonToolbar className='footer-auth-group-text' color='transparent'>
 
-          <p>Имеются проблемы? <IonText className='item-hover-cursor' color='primary'>Получить помощь</IonText></p>
+          <IonText>Имеются проблемы? <IonText className='item-hover-cursor' color='primary'>Получить помощь</IonText></IonText>
 
         </IonToolbar>
       </IonFooter>
-      {/* /Footer */}
 
     </IonApp>
   );

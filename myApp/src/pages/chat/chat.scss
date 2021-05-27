@@ -1,0 +1,15 @@
+@import url('../../theme/variables.css');
+
+.chat-toolbar, .search-toolbar, .chat-rooms-wrapper{
+    color: var(--ion-text-color-main) !important;
+}
+
+.search-toolbar{
+    padding: 0 !important;
+    height: 50 !important;
+}
+
+.tabs-wrapper{
+    height: 58px !important;
+    flex: none !important;
+}
