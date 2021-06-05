@@ -49,12 +49,14 @@ const RegContent: React.FC = () => {
   })
 
   // Loggin errors
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const regErrors = useEffect(() => {
     message(error)
     clearError();
   }, [error, message, clearError])
 
   // State progress bar
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const progressBarHandler = useEffect(() => {
 
     if (form.password.length <= 5)

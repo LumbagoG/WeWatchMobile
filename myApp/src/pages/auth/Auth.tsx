@@ -36,6 +36,7 @@ import Main from '../home/Main';
 import AuthContent from '../../components/auth/AuthContent';
 import RegContent from '../../components/auth/RegContent';
 import Chat from '../chat/Chat';
+import Profile from '../profile/Profile';
 
 export const Auth = (isAunteficated: boolean) => {
   if (isAunteficated) {
@@ -47,6 +48,7 @@ export const Auth = (isAunteficated: boolean) => {
           
             <Route path='/main' component={Main} />
             <Route path='/main/chat' component={Chat} />
+            <Route path='/main/profile' component={Profile} />
             
             <Route render={() => <Redirect to='/main/home'/>}/>
 

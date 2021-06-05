@@ -27,7 +27,7 @@ import './style.css';
 import {
   IonApp, IonGrid, IonTitle, IonRow, IonCol,
   IonRippleEffect, IonIcon, IonLabel, IonInput,
-  IonItem, IonText, IonFooter, IonToolbar, IonButton, IonContent 
+  IonItem, IonText, IonFooter, IonToolbar, IonButton 
 } from '@ionic/react';
 
 /* Any imports */
@@ -50,7 +50,7 @@ const AuthContent: React.FC = () => {
   const message = useMessage();
   const auth = useContext(AuthContext);
 
-  const { request, error, clearError, loading } = useHttp();
+  const { request, error, clearError } = useHttp();
   const [form, setForm] = useState({
     login: '', password: ''
   });
@@ -134,25 +134,28 @@ const AuthContent: React.FC = () => {
         <IonRow className='auth-container btn-group ion-justify-content-center ion-align-items-center'>
           <IonItem className='wrapper-btn-group' color='transparent' lines='none'>
             
-              <IonButton
-                  fill="solid"
-                  expand="block"
-                  style={{color: 'white', width: '100%', height: '70%', margin: 0}}
-                  onClick={loginHandler}
-                  disabled={loading}
-                >Войти</IonButton>
+            <IonButton
+                fill="solid"
+                expand="block"
+                style={{color: 'white', width: '100%', height: '70%', margin: 0}}
+                onClick={loginHandler}
+                disabled={ ((form.login.length && form.password.length) !== 0) ? false : true }
+              >Войти</IonButton>
 
-              <IonRippleEffect></IonRippleEffect>
+            <IonRippleEffect></IonRippleEffect>
 
-            </IonItem>
+          </IonItem>
 
           <IonItem href='/reg' className='wrapper-btn-group' color='transparent' lines='none'>
-            <IonItem className="ion-activatable ripple-parent btn-reg item-hover-cursor">
+          
+            <IonButton
+                fill="solid"
+                expand="block"
+                style={{width: '100%', height: '70%', margin: 0}}
+              >Регистрация</IonButton>
 
-              <IonText style={{ width: '100%' }}>Регистрация</IonText>
-              <IonRippleEffect></IonRippleEffect>
+            <IonRippleEffect></IonRippleEffect>
 
-            </IonItem>
           </IonItem>
         </IonRow>
       </IonGrid>

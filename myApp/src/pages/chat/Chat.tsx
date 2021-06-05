@@ -48,33 +48,18 @@ import {
   IonRefresher,
   IonRefresherContent,
   IonList,
-  IonItemSliding,
   IonItem,
   IonLabel,
-  IonItemOptions,
-  IonItemOption,
   IonSearchbar,
-  IonHeader,
   IonGrid,
   IonRow,
   IonCol,
-  IonCard,
-  IonCardHeader,
-  IonCardTitle,
-  IonCardSubtitle,
-  IonCardContent,
-  IonFooter,
   IonModal,
   IonText,
-  IonListHeader,
-  IonAvatar,
-  IonImg,
   useIonActionSheet,
 } from "@ionic/react";
 
 import { RefresherEventDetail } from "@ionic/core";
-
-import { ContextMenu, MenuItem, ContextMenuTrigger } from "react-contextmenu";
 
 /* Socet.io import */
 import socketIOClient from "socket.io-client";
@@ -82,20 +67,22 @@ import socketIOClient from "socket.io-client";
 /* Local imports */
 import { Route } from "react-router";
 
+import rooms from '../../data/rooms';
+import IonReactNav from "../../components/chat/IonReactNav";
+import RoomDetail from '../../components/chat/RoomDetail';
+import { IonReactRouter } from "@ionic/react-router";
+
+
 const Chat: React.FC = () => {
   const ENDPOINT = `http://localhost:${window.location.port}`;
 
-  const [present, dismiss] = useIonActionSheet();
+  const [room, setRoom] = React.useState(rooms[0])
+  const [present] = useIonActionSheet();
   const [message, setMessage] = React.useState("");
   const [showModal, setShowModal] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
   const [filteredSearch, setFilteredSearch] = React.useState([
-    {
-      id: "",
-      title: "",
-      detail: "",
-      page: "",
-    },
+    ...rooms
   ]);
 
   //Refresher
@@ -108,10 +95,6 @@ const Chat: React.FC = () => {
     }, 2000);
   }
 
-  function handleClickContextMenu(e, data) {
-    console.log(data.foo);
-  }
-
   //Socet IO
   React.useEffect(() => {
     const socket = socketIOClient(ENDPOINT);
@@ -122,177 +105,188 @@ const Chat: React.FC = () => {
     });
   }, [ENDPOINT, message]);
 
-  //Rooms info array
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const SEARCH = [
-    {
-      id: "1",
-      title: "Общий",
-      detail:
-        "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.",
-      page: "/search-business",
-    },
-  ];
 
   //Filtering searchsearch rooms
   React.useEffect(() => {
-    let tempSearchResult = SEARCH.filter((ele) =>
+    let tempSearchResult = rooms.filter((ele) =>
       ele.title.includes(searchQuery)
     );
+
+    if (filteredSearch.length === 0) setFilteredSearch([...rooms])
+    console.log(filteredSearch);
+
     setFilteredSearch([...tempSearchResult]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery]);
 
   return (
     <IonApp>
-      {/*-- First chat toolbar --*/}
-      <IonToolbar
-        color="var(--ion-background-body-color)"
-        className="chat-toolbar"
-      >
-        <IonButtons slot="primary">
-          <IonButton
-            onClick={() =>
-              present({
-                buttons: [
-                  { text: "Создать комнату" },
-                  { text: "Создать чат" },
-                  { text: "Закрыть" },
-                ],
-                header: "Действия",
-              })
-            }
+
+        {/* Custon nav */}
+        <IonReactNav detail={() => <RoomDetail {...room} />}>
+
+          {/*-- First chat toolbar --*/}
+          <IonToolbar
+            color="var(--ion-background-body-color)"
+            className="chat-toolbar"
           >
-            <IonIcon
-              slot="icon-only"
-              ios={ellipsisHorizontal}
-              md={ellipsisVertical}
-            />
-          </IonButton>
-        </IonButtons>
+            <IonButtons slot="primary">
+              <IonButton
+                onClick={() =>
+                  present({
+                    buttons: [
+                      { text: "Создать комнату" },
+                      { text: "Создать чат" },
+                      { text: "Закрыть" },
+                    ],
+                    header: "Действия",
+                  })
+                }
+              >
+                <IonIcon
+                  slot="icon-only"
+                  ios={ellipsisHorizontal}
+                  md={ellipsisVertical}
+                />
+              </IonButton>
+            </IonButtons>
 
-        <IonTitle>Чаты</IonTitle>
-      </IonToolbar>
+            <IonTitle>Чаты</IonTitle>
+          </IonToolbar>
 
-      {/*-- Second chat toolbar --*/}
-      <IonToolbar
-        color="var(--ion-background-body-color)"
-        className="search-toolbar"
-      >
-        <IonButtons>
-          <IonSearchbar
+          {/*-- Second chat toolbar --*/}
+          <IonToolbar
             color="var(--ion-background-body-color)"
             className="search-toolbar"
-            placeholder="Поиск комнат"
-            value={searchQuery}
-            onIonChange={(e) => setSearchQuery(e.detail.value)}
-          />
-        </IonButtons>
-      </IonToolbar>
+          >
+            <IonButtons>
+              <IonSearchbar
+                color="var(--ion-background-body-color)"
+                className="search-toolbar"
+                placeholder="Поиск комнат"
+                value={searchQuery}
+                onIonChange={(e) => setSearchQuery(e.detail.value)}
+              />
+            </IonButtons>
+          </IonToolbar>
 
-      {/*-- Chat rooms wrapper --*/}
-      <IonContent
-        className="chat-rooms-wrapper"
-        scrollEvents={true}
-        onIonScrollStart={() => { }}
-        onIonScroll={() => { }}
-        onIonScrollEnd={() => { }}
-      >
-        {/*-- Custom Refresher Content --*/}
-        <IonRefresher slot="fixed" onIonRefresh={doRefresh}>
-          <IonRefresherContent
-            pullingIcon={chevronDownCircleOutline}
-            pullingText="Потяните вниз для обновления"
-            refreshingSpinner="bubbles"
-            refreshingText="Обновление..."
-          ></IonRefresherContent>
-        </IonRefresher>
+          {/*-- Chat rooms wrapper --*/}
+          <IonContent
+            className="chat-rooms-wrapper"
+            scrollEvents={true}
+            onIonScrollStart={() => {}}
+            onIonScroll={() => {}}
+            onIonScrollEnd={() => {}}
+            fullscreen
+          >
+            {/*-- Custom Refresher Content --*/}
+            <IonRefresher style={{ background: 'none !important'}} slot="fixed" onIonRefresh={doRefresh}>
+              <IonRefresherContent
+                style={{ background: 'none !important'}}
+                pullingIcon={chevronDownCircleOutline}
+                pullingText="Потяните вниз для обновления"
+                refreshingSpinner="bubbles"
+                refreshingText="Обновление..."
+              />
+            </IonRefresher>
 
-        {/*-- Chat rooms list --*/}
-        <IonGrid className="chat-rooms-list">
-          <IonRow>
-            {filteredSearch.map((search) => (
-              <IonCol
-                size="12"
-                size-xs="12"
-                size-sm="12"
-                size-md="12"
-                size-lg="12"
-                key={search.id}
-              >
-                <IonList>
-                  {/*-- Context Trigger --*/}
-                  <ContextMenuTrigger id="same_unique_identifier">
-                    <IonItem className="well">
-                      <IonAvatar slot="start">
-                        <IonImg src="/images/rooms/general-room.png" />
-                      </IonAvatar>
+            {/*-- Chat rooms list --*/}
+            
+              
+            <IonContent>
+              <IonGrid className="chat-rooms-list">
+                <IonRow>
+                  
+                    <IonCol
+                      size="12"
+                      size-xs="12"
+                      size-sm="12"
+                      size-md="12"
+                      size-lg="12"
+                    >
+                      <IonList>
 
-                      <IonLabel>
-                        <IonText>{search.title}</IonText>
-                      </IonLabel>
-                    </IonItem>
-                  </ContextMenuTrigger>
+                        {/*-- Item room --*/}
+                        {filteredSearch.map((roomItem, i) => (
+                        
+                          <IonItem 
+                            button 
+                            key={i} 
+                            onClick={ () => setRoom(rooms[i])} 
+                            className="ion-react-nav-detail-btn">
+                              { console.log(i , room)}
+                          
+                            <IonIcon color='primary' size='large' slot='start' icon={roomItem.icon} />
+                          
+                            <IonLabel>
+                              <IonText>{roomItem.title}</IonText>
+                            </IonLabel>
+                          </IonItem>
+                        ))}
 
-                  <ContextMenu id="same_unique_identifier">
-                    <MenuItem onClick={handleClickContextMenu}>
-                      ContextMenu Item 1
-                    </MenuItem>
-                  </ContextMenu>
-                </IonList>
-              </IonCol>
-            ))}
+                      </IonList>
+                    </IonCol>
+                 
 
-            {/*-- Chat rooms modal --*/}
-            <IonCol className="ion-text-center">
-              <IonModal isOpen={showModal} cssClass="my-custom-class">
-                <IonText>This is modal content</IonText>
-                <IonButton
-                  color="secondary"
-                  onClick={() => setShowModal(false)}
-                >
-                  Закрыть
-                </IonButton>
-              </IonModal>
-              <IonButton color="primary" onClick={() => setShowModal(true)}>
-                Больше информации
-              </IonButton>
-            </IonCol>
-          </IonRow>
-        </IonGrid>
-      </IonContent>
+                  {/*-- Chat rooms modal --*/}
+                  <IonCol className="ion-text-center">
+                    <IonModal isOpen={showModal} cssClass="my-custom-class">
+                      <IonText>This is modal content</IonText>
+                      <IonButton
+                        color="secondary"
+                        onClick={() => setShowModal(false)}
+                      >
+                        Закрыть
+                      </IonButton>
+                    </IonModal>
+                    <IonButton color="primary" onClick={() => setShowModal(true)}>
+                      Больше информации
+                    </IonButton>
+                  </IonCol>
 
-      {/*-- Tabs wrapper --*/}
-      <IonContent className="tabs-wrapper">
-        <IonTabs className="tab">
-          {/* Routs */}
-          <IonRouterOutlet>
-            <Route path="/main/home" />
-            <Route path="/main/play" />
-            <Route path="/main/add" />
-            <Route path="/main/chat" />
-            <Route path="/main/profile" />
-          </IonRouterOutlet>
+                </IonRow>
+              </IonGrid>
+            </IonContent>
+              
+          </IonContent>
+            
 
-          {/* Bottom tabs */}
-          <IonTabBar class="tab-bar" slot="bottom">
-            <IonTabButton class="tab-button" tab="home" href="/main/home">
-              <IonIcon class="tab-icon" icon={home} />
-            </IonTabButton>
-            <IonTabButton class="tab-button" tab="play" href="/main/video">
-              <IonIcon class="tab-icon" icon={play} />
-            </IonTabButton>
-            <IonTabButton class="tab-button" tab="add" href="/main/add">
-              <IonIcon class="tab-icon" icon={addCircle} />
-            </IonTabButton>
-            <IonTabButton class="tab-button" tab="chat" href="/main/chat">
-              <IonIcon class="tab-icon" icon={chatbubbles} />
-            </IonTabButton>
-            <IonTabButton class="tab-button" tab="profile" href="/main/profile">
-              <IonIcon class="tab-icon" icon={person} />
-            </IonTabButton>
-          </IonTabBar>
-        </IonTabs>
-      </IonContent>
+          {/*-- Tabs wrapper --*/}
+          <IonContent className="tabs-wrapper">
+            <IonTabs className="tab">
+
+              {/* Routs */}
+              <IonRouterOutlet>
+                <Route path="/main/home" />
+                <Route path="/main/play" />
+                <Route path="/main/add" />
+                <Route path="/main/chat" />
+                <Route path="/main/profile" />
+              </IonRouterOutlet>
+
+              {/* Bottom tabs */}
+              <IonTabBar class="tab-bar" slot="bottom">
+                <IonTabButton class="tab-button" tab="home" href="/main/home">
+                  <IonIcon class="tab-icon" icon={home} />
+                </IonTabButton>
+                <IonTabButton class="tab-button" tab="play" href="/main/video">
+                  <IonIcon class="tab-icon" icon={play} />
+                </IonTabButton>
+                <IonTabButton class="tab-button" tab="add" href="/main/add">
+                  <IonIcon class="tab-icon" icon={addCircle} />
+                </IonTabButton>
+                <IonTabButton class="tab-button" tab="chat" href="/main/chat">
+                  <IonIcon class="tab-icon" icon={chatbubbles} />
+                </IonTabButton>
+                <IonTabButton class="tab-button" tab="profile" href="/main/profile">
+                  <IonIcon class="tab-icon" icon={person} />
+                </IonTabButton>
+              </IonTabBar>
+            
+            </IonTabs>
+          </IonContent>
+        
+        </IonReactNav>
     </IonApp>
   );
 };

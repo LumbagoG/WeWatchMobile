@@ -19,12 +19,12 @@ import '@ionic/react/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
-import {Auth} from './pages/auth/Auth';
+import { Auth } from './pages/auth/Auth';
 import { useAuth } from './hooks/auth.hook';
 import { AuthContext } from './context/AuthContext';
 
 const App = () => {
-  const {token, login, logout, userId} = useAuth();
+  const { token, login, logout, userId } = useAuth();
   const isAunteficated = !!token;
   const routes = Auth(isAunteficated);
 
@@ -35,14 +35,14 @@ const App = () => {
         token, login, logout, userId, isAunteficated
       }}>
         {/* Rout when aunteficated */}
-        
-            {routes}
-          
+
+          {routes}
+
         {/* /Rout when aunteficated */}
-    </AuthContext.Provider>
-    
+      </AuthContext.Provider>
+
     </React.StrictMode>
-    
+
   );
 }
 
