@@ -25,6 +25,42 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-step-850: rgb(64, 89, 214);
 }
 
+:root {
+  --ion-background-body-color: rgb(32, 33, 38);
+  --ion-color-logo: rgb(255, 255, 255);
+  --ion-background-elem-color: rgb(38, 39, 44);
+  --ion-border-element: rgb(150, 150, 150);
+  --ion-color-primary: rgb(0, 123, 255);
+  --ion-background-color: var(--ion-background-body-color);
+  --ion-overlay-background-color: var(--ion-background-body-color);
+  --ion-item-background: var(--ion-background-body-color);
+
+  --ion-text-color: rgb(153, 153, 153);
+  --ion-text-color-main: rgb(255, 255, 255);
+  --ion-item-border-color: rgb(38, 39, 44);
+  --ion-text-color-rgb: rgb(255, 255, 255);
+  --ion-color-step-850: rgb(255, 255, 255);
+}
+
+/*
+ * iOS Dark Theme
+ * -------------------------------------------
+ */
+
+.ios body {
+  --ion-background-body-color: #202126;
+}
+
+
+/*
+ * Material Design Dark Theme
+ * -------------------------------------------
+ */
+
+.md body {
+  --ion-background-body-color: #202126;
+}
+
 * {
   transition: .3s ease;
 }

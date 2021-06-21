@@ -164,7 +164,7 @@ const AuthContent: React.FC = () => {
       <IonFooter className="ion-no-border footer-auth">
         <IonToolbar className='footer-auth-group-text' color='transparent'>
 
-          <IonText>Имеются проблемы? <IonText className='item-hover-cursor' color='primary'>Получить помощь</IonText></IonText>
+          <IonText color='#fff'>Имеются проблемы? <IonText className='item-hover-cursor' color='primary'>Получить помощь</IonText></IonText>
 
         </IonToolbar>
       </IonFooter>

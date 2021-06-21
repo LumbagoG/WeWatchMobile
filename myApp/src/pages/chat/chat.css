@@ -14,4 +14,8 @@
       -ms-flex: none !important;
           flex: none !important;
 }
+
+.messaging__channel-header {
+  display: none !important;
+}
 /*# sourceMappingURL=chat.css.map */

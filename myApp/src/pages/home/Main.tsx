@@ -27,17 +27,58 @@ import './main.css';
 import { 
   IonTabs, IonRouterOutlet, 
   IonTabBar, IonTabButton, 
-  IonIcon, IonApp
+  IonIcon, IonApp, IonContent, IonSlides, IonSlide, IonButton
 } from '@ionic/react';
 
 /* Local imports */
 import { Route } from 'react-router';
+
+const slideOpts = {
+  initialSlide: 0,
+  speed: 400
+};
 
 const Main: React.FC = () => {
 
   return (
     <IonApp>
 
+    <IonContent fullscreen className="ion-padding" scroll-y="false">
+          <IonSlides>
+
+            <IonSlide>
+              <div className="slide">
+                <img src="https://github.com/ionic-team/ionic-docs/blob/master/src/demos/api/slides/slide-1.png?raw=true" alt=''/>
+                <h2>Добро пожаловать WeWatch!</h2>
+                <p>Откройте для себя общение на новом уровне</p>
+              </div>
+            </IonSlide>
+
+            <IonSlide>
+              <div className="slide">
+                <img src="https://github.com/ionic-team/ionic-docs/blob/master/src/demos/api/slides/slide-1.png?raw=true" alt=''/>
+                <h2>Добро пожаловать WeWatch!</h2>
+                <p>Откройте для себя общение на новом уровне</p>
+              </div>
+            </IonSlide>
+
+            <IonSlide>
+              <div className="slide">
+                <img src="https://github.com/ionic-team/ionic-docs/blob/master/src/demos/api/slides/slide-1.png?raw=true" alt=''/>
+                <h2>Добро пожаловать WeWatch!</h2>
+                <p>Откройте для себя общение на новом уровне</p>
+              </div>
+            </IonSlide>
+
+            <IonSlide>
+              <img src="./slide-4.png" alt=''/>
+              <h2>Хочешь общения?</h2>
+              <IonButton href='/main/chat' fill="clear">Да</IonButton>
+            </IonSlide>
+
+          </IonSlides>
+        </IonContent>
+    
       
 
       <IonTabs className='tab'>

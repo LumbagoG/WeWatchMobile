@@ -13,7 +13,7 @@ import {
 } from "@ionic/react";
 
 import { ellipsisHorizontal, ellipsisVertical } from "ionicons/icons";
-
+import Iframe from 'react-iframe'
 interface RoomDetailProps {
   id: number;
   title: string;
@@ -65,9 +65,14 @@ const RoomDetail: React.FC<RoomDetailProps> = ({
       </IonHeader>
 
       {/* Content room page */}
-      <IonContent fullscreen className="ion-padding">
-        
-      </IonContent>
+      
+        <Iframe url="https://getstream.github.io/website-react-examples/social-messenger/"
+          width="100%"
+          height="100%"
+          id="myId"
+          frameBorder={2}
+          />
+      
 
     </React.Fragment>
   );

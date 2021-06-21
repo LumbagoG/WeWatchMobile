@@ -57,6 +57,7 @@ import {
   IonModal,
   IonText,
   useIonActionSheet,
+  IonImg,
 } from "@ionic/react";
 
 import { RefresherEventDetail } from "@ionic/core";
@@ -70,8 +71,6 @@ import { Route } from "react-router";
 import rooms from '../../data/rooms';
 import IonReactNav from "../../components/chat/IonReactNav";
 import RoomDetail from '../../components/chat/RoomDetail';
-import { IonReactRouter } from "@ionic/react-router";
-
 
 const Chat: React.FC = () => {
   const ENDPOINT = `http://localhost:${window.location.port}`;
@@ -216,7 +215,7 @@ const Chat: React.FC = () => {
                             className="ion-react-nav-detail-btn">
                               { console.log(i , room)}
                           
-                            <IonIcon color='primary' size='large' slot='start' icon={roomItem.icon} />
+                            <img style={{ width: '3em', marginRight: '1em' }} src="/images/rooms/general-room.png" alt="" />
                           
                             <IonLabel>
                               <IonText>{roomItem.title}</IonText>
@@ -230,8 +229,8 @@ const Chat: React.FC = () => {
 
                   {/*-- Chat rooms modal --*/}
                   <IonCol className="ion-text-center">
-                    <IonModal isOpen={showModal} cssClass="my-custom-class">
-                      <IonText>This is modal content</IonText>
+                    <IonModal isOpen={showModal} cssClass="my-custom-class ion-text-center">
+                      <IonText></IonText>
                       <IonButton
                         color="secondary"
                         onClick={() => setShowModal(false)}

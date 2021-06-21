@@ -10,20 +10,4 @@ export default [
       "Какое то описание",
     icon: peopleCircleOutline,
   },
-
-  {
-    id: 2,
-    title: "Чат",
-    detail:
-      "Какое то описание",
-    icon: peopleCircleOutline,
-  },
-
-  {
-    id: 3,
-    title: "Глеб",
-    detail:
-      "Какое то описание",
-    icon: peopleCircleOutline,
-  },
 ];

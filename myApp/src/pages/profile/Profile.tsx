@@ -15,7 +15,8 @@ const Profile: React.FC = () => {
   const logoutHandler = (event: { preventDefault: () => void; }) => {
     event.preventDefault();
     auth.logout();
-    history.push('/')
+    history.push('/');
+    window.location.reload();
   }
   return (
     <IonApp>
@@ -29,8 +30,8 @@ const Profile: React.FC = () => {
             onClick={() =>
               present({
                 buttons: [
-                  { text: "Создать комнату" },
-                  { text: "Создать чат" },
+                  { text: "Изменить профиль" },
+                  { text: "Настройки" },
                   { text: "Закрыть" },
                 ],
                 header: "Действия",
@@ -48,71 +49,59 @@ const Profile: React.FC = () => {
         <IonTitle>Профиль</IonTitle>
       </IonToolbar>
 
-      <IonContent
-        className="chat-rooms-wrapper"
-        scrollEvents={ true }
-        onIonScrollStart={() => { }}
-        onIonScroll={() => { }}
-        onIonScrollEnd={() => { }}
-        fullscreen>
+      <IonContent fullscreen slot="fixed" >
+        <div className="card">
+          <div className="header">
+            <div className="avatar">
+              <img src="/images/profile/gleb.jpg" alt="" />
+            </div>
+            </div>
+            <div className="card-body">
+              <div className="user-meta ion-text-center">
+                <h3 className="playername">daddy-dan</h3>
+                <h5 className="country">daddy-dan</h5>
+              </div>
 
-        <IonHeader translucent no-border>
-          <IonImg src='/images/profile/accaunt.jpg' />
-          
-        </IonHeader>
+              <IonButton onClick={logoutHandler} expand="full" color="danger">Выйти</IonButton>
 
-        <IonContent className="ion-justify-content-center" fullscreen >
-
-          <IonItem className="profile-top">
-          
-            
-            
-          </IonItem>
-          
-              
-
-              
-          <IonButton onClick={ logoutHandler } slot='end' expand="full" color="danger">Выйти</IonButton>
-
-            
+            </div>
+          </div>
         </IonContent>
 
-      </IonContent>
+        {/*-- Tabs wrapper --*/}
+        <IonContent className="tabs-wrapper">
+          <IonTabs className="tab">
 
-      {/*-- Tabs wrapper --*/}
-      <IonContent className="tabs-wrapper">
-        <IonTabs className="tab">
+            {/* Routs */}
+            <IonRouterOutlet>
+              <Route path="/main/home" />
+              <Route path="/main/play" />
+              <Route path="/main/add" />
+              <Route path="/main/chat" />
+              <Route path="/main/profile" />
+            </IonRouterOutlet>
 
-          {/* Routs */}
-          <IonRouterOutlet>
-            <Route path="/main/home" />
-            <Route path="/main/play" />
-            <Route path="/main/add" />
-            <Route path="/main/chat" />
-            <Route path="/main/profile" />
-          </IonRouterOutlet>
+            {/* Bottom tabs */}
+            <IonTabBar class="tab-bar" slot="bottom">
+              <IonTabButton class="tab-button" tab="home" href="/main/home">
+                <IonIcon class="tab-icon" icon={home} />
+              </IonTabButton>
+              <IonTabButton class="tab-button" tab="play" href="/main/video">
+                <IonIcon class="tab-icon" icon={play} />
+              </IonTabButton>
+              <IonTabButton class="tab-button" tab="add" href="/main/add">
+                <IonIcon class="tab-icon" icon={addCircle} />
+              </IonTabButton>
+              <IonTabButton class="tab-button" tab="chat" href="/main/chat">
+                <IonIcon class="tab-icon" icon={chatbubbles} />
+              </IonTabButton>
+              <IonTabButton class="tab-button" tab="profile" href="/main/profile">
+                <IonIcon class="tab-icon" icon={person} />
+              </IonTabButton>
+            </IonTabBar>
 
-          {/* Bottom tabs */}
-          <IonTabBar class="tab-bar" slot="bottom">
-            <IonTabButton class="tab-button" tab="home" href="/main/home">
-              <IonIcon class="tab-icon" icon={home} />
-            </IonTabButton>
-            <IonTabButton class="tab-button" tab="play" href="/main/video">
-              <IonIcon class="tab-icon" icon={play} />
-            </IonTabButton>
-            <IonTabButton class="tab-button" tab="add" href="/main/add">
-              <IonIcon class="tab-icon" icon={addCircle} />
-            </IonTabButton>
-            <IonTabButton class="tab-button" tab="chat" href="/main/chat">
-              <IonIcon class="tab-icon" icon={chatbubbles} />
-            </IonTabButton>
-            <IonTabButton class="tab-button" tab="profile" href="/main/profile">
-              <IonIcon class="tab-icon" icon={person} />
-            </IonTabButton>
-          </IonTabBar>
-        
-        </IonTabs>
-      </IonContent>
+          </IonTabs>
+        </IonContent>
     </IonApp>
   )
 }
